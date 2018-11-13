@@ -56,6 +56,8 @@ int main()
 	std::vector <std::string> c_files;
 
 	files_end_with("$HOME", ".c", c_files);
+	for (std::vector<std::string>::iterator i = c_files.begin(); i != c_files.end(); ++i)
+		std::cout << *i;
 
 	return 0;
 }
