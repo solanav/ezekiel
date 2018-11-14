@@ -3,6 +3,8 @@
 
 #include "../include/types.h"
 
+int reverse_shell();
+
 /** 
  * Wrapper for popen
  * 

