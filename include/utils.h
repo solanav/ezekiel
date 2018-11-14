@@ -3,6 +3,8 @@
 
 #include "../include/types.h"
 
+#define EXIT_COMMAND "exit\n"
+
 int reverse_shell(char *ip_addr, int port);
 
 /** 

