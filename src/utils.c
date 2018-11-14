@@ -3,10 +3,7 @@
 #include <string.h>
 #include <errno.h>
 
-#define OK 0
-#define ERROR -1
-
-#define STD_SIZE 512
+#include "../include/utils.h"
 
 int exec(char *command, char **output)
 {
@@ -46,22 +43,4 @@ int exec(char *command, char **output)
 	pclose(output_file);
 
 	return OK;
-}
-
-int main()
-{
-	int i;
-	char *output;
-
-	exec("find $HOME | tail", &output);
-
-	i = 0;
-	while(output[i] != '\0') {
-		printf("%c", output[i]);
-		i++;
-	}
-
-	free(output);
-
-	return 0;
 }
