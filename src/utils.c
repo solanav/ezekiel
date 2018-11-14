@@ -3,7 +3,7 @@
 #include <string.h>
 #include <errno.h>
 
-#include "../include/utils.h"
+#include "utils.h"
 
 int exec(char *command, char **output)
 {

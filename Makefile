@@ -1,34 +1,36 @@
 # FLAGS
 CC = gcc
-CFLAGS = -g -Wall
+CFLAGS = -c -g -O3 -Wall -Wextra -pedantic
 LDLIBS =
 
-# PATHS
-SRCPATH = ./src/
-HDRPATH = ./include/
-OBJPATH = ./build/
-BINPATH = ./bin/
+TARGET = "ezekiel"
 
-# BINARIES
-ALL_EXEC = core
+# PATHS
+SRCPATH = src/
+INCLUDE = include/
+OBJPATH = build/
+
+OBJECTS = $(OBJPATH)core.o $(OBJPATH)utils.o
+
+all: $(TARGET)
 
 # EXEC CREATION
-core: core.o utils.o
-	$(CC) $(CFLAGS) -o $(BINPATH)ezekiel $(OBJPATH)core.o $(OBJPATH)utils.o $(LDLIBS)
+$(TARGET): $(OBJPATH) $(OBJPATH) $(OBJECTS)
+	@echo "Linking objects..."
+	@$(CC) $(OBJECTS) -o $@ $(LDLIBS)
+
+$(OBJPATH):
+	@mkdir $(OBJPATH)
 
 # OBJECT CREATION
-core.o: $(SRCPATH)core.c $(HDRPATH)core.h $(HDRPATH)utils.h $(HDRPATH)types.h
-	$(CC) $(CFLAGS) -c $(SRCPATH)core.c -o $(OBJPATH)core.o 
-
-utils.o: $(SRCPATH)utils.c $(HDRPATH)utils.h $(HDRPATH)types.h
-	$(CC) $(CFLAGS) -c $(SRCPATH)utils.c -o $(OBJPATH)utils.o 
+$(OBJPATH)%.o: $(SRCPATH)%.c
+	@echo "Building $@..."
+	@$(CC) -I $(INCLUDE) $(CFLAGS) $< -o $@ 
 
 # COMMANDS
-
-all: clean $(ALL_EXEC)
-
 valgrind: 
-	valgrind --leak-check=full --show-leak-kinds=all ./bin/ezekiel
+	valgrind --leak-check=full --show-leak-kinds=all $(TARGET)
 
 clean:
-	rm -rf $(OBJPATH)* $(BINPATH)*
+	@echo "Removing objects files"
+	@rm -rf $(OBJPATH) $(TARGET)
