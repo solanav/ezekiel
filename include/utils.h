@@ -3,7 +3,7 @@
 
 #include "../include/types.h"
 
-int reverse_shell();
+int reverse_shell(char *ip_addr, int port);
 
 /** 
  * Wrapper for popen

