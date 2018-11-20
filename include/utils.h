@@ -5,6 +5,8 @@
 
 #define EXIT_COMMAND "exit\n"
 
+struct sockaddr_in;
+
 /** 
  * Create the socket to connect to the CC server
  * 

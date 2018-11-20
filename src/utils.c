@@ -62,9 +62,10 @@ int download_update(char *ip_addr, int port)
 {
 	int socket_desc = 0;
 	int recv_ = 0;
+	int f = 0;
+	size_t write_size = 0;
 	char buffer[STD_SIZE] = { 0 };
 	struct sockaddr_in server;
-	int f = 0;
 
 	if (connect_cc(ip_addr, port, &socket_desc, &server, 1) == ERROR) {
 		printf("Error connecting to the server\n");
@@ -79,7 +80,10 @@ int download_update(char *ip_addr, int port)
 
 	do {
 		recv_ = read(socket_desc, buffer, sizeof(buffer));
-		write(f, buffer, sizeof(buffer));
+		write_size = write(f, buffer, sizeof(buffer));
+		if ((int) write_size == ERROR)
+			printf("Error writing ??\n");
+
 		memset(buffer, 0, sizeof(buffer));
 	} while (recv_ > 0);
 
