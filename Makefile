@@ -1,7 +1,7 @@
 # FLAGS
 CC = gcc
-CFLAGS = -c -g -O3 -Wall -Wextra -pedantic
-LDLIBS =
+CFLAGS = -c -g -Os -Wall -Wextra -pedantic
+LDLIBS = -lpthread
 
 TARGET = "ezekiel"
 
@@ -12,7 +12,7 @@ OBJPATH = build/
 
 OBJECTS = $(OBJPATH)core.o $(OBJPATH)utils.o
 
-all: $(TARGET)
+all: clean $(TARGET)
 
 # EXEC CREATION
 $(TARGET): $(OBJPATH) $(OBJPATH) $(OBJECTS)
