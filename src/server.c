@@ -10,6 +10,8 @@
 #define ERROR -1
 #define STD_SIZE 512
 
+#define PORT 8080
+
 int create_socket(int port, int *socket_desc, struct sockaddr_in *server,
 		  int isTCP);
 int update_client();
@@ -49,7 +51,7 @@ int listen_client()
 
 	client_size = sizeof(client);
 
-	if (create_socket(8080, &socket_desc, &server, 0) == ERROR)
+	if (create_socket(PORT + 1, &socket_desc, &server, 0) == ERROR)
 		return ERROR;
 
 	while (1) {
@@ -73,7 +75,7 @@ int update_client()
 	size_t flag = 0;
 	FILE *file_to_send;
 
-	if (create_socket(8080, &socket_desc, &server, 1) == ERROR)
+	if (create_socket(PORT, &socket_desc, &server, 1) == ERROR)
 		return ERROR;
 
 	printf("Waiting for connections...\n");

