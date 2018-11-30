@@ -12,6 +12,8 @@
 
 #define PORT 8080
 
+#define EZEKIEL_PATH "../ezekiel"
+
 int create_socket(int port, int *socket_desc, struct sockaddr_in *server,
 		  int isTCP);
 int update_client();
@@ -79,12 +81,13 @@ int update_client()
 		return ERROR;
 
 	printf("Waiting for connections...\n");
+	
 	listen(socket_desc, 1);
 
 	new_socket = accept(socket_desc, (struct sockaddr *)&client,
 			    (socklen_t *)&c);
 
-	file_to_send = fopen("../ezekiel", "r");
+	file_to_send = fopen(EZEKIEL_PATH, "r");
 	if (!file_to_send) {
 		printf("Error opening file\n");
 		return -1;
@@ -104,11 +107,11 @@ int update_client()
 int menu()
 {
 	short user_command;
-
+#ifndef DEBUG
 	printf("[0] Update client\n");
 	printf("[1] Listen for ping\n");
 	printf("> ");
-
+#endif
 	scanf("%hd", &user_command);
 
 	switch (user_command) {
