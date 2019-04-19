@@ -1,2 +1,2 @@
-# New version on development
-RAT for linux. New version changes too much to merge with this one. Kept for memories.
+# This is just a demo
+RAT for linux. Latest version with full capabilities and working server is not yet released.
